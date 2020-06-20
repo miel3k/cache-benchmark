@@ -9,6 +9,9 @@ public abstract class Cache<K, V> {
     HashMap<K, V> cacheMap;
     LinkedList<K> evictionList;
 
+    protected Cache() {
+    }
+
     public abstract void evict();
 
     public abstract V getValue(K key);
