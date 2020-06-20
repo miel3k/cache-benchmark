@@ -7,6 +7,12 @@ public class LastRecentlyUsedCache<K, V> extends Cache<K, V> {
     }
 
     @Override
+    public void evict() {
+        K key = evictionList.removeLast();
+        cacheMap.remove(key);
+    }
+
+    @Override
     public V getValue(K key) {
         boolean isRemoved = this.evictionList.remove(key);
         if (isRemoved) {

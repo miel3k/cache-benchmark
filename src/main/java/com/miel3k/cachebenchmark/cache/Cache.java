@@ -9,6 +9,8 @@ public abstract class Cache<K, V> {
     HashMap<K, V> cacheMap;
     LinkedList<K> evictionList;
 
+    public abstract void evict();
+
     public abstract V getValue(K key);
 
     public abstract Cache<K, V> putValue(K key, V value);
@@ -17,11 +19,6 @@ public abstract class Cache<K, V> {
         this.cacheSize = cacheSize;
         this.cacheMap = new HashMap<>(cacheSize);
         this.evictionList = new LinkedList<>();
-    }
-
-    void evict() {
-        K key = evictionList.removeLast();
-        cacheMap.remove(key);
     }
 
     boolean isFull() {
