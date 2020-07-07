@@ -34,5 +34,5 @@ gradle-app.setting
 # macOS
 .DS_Store
 
-# jcb output
+# cb output
 /output

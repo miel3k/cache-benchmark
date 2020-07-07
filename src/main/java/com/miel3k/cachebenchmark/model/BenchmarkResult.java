@@ -3,11 +3,12 @@ package com.miel3k.cachebenchmark.model;
 public class BenchmarkResult {
 
     public static String HEADER = String.format(
-            "%16s%16s%16s%16s%16s%24s%24s%24s",
+            "%16s%16s%16s%16s%16s%16s%24s%24s%24s",
             "Cache policy",
+            "Cache size",
             "Iterations",
             "Hit count",
-            "Hit ratio",
+            "Hit ratio (%)",
             "Evictions",
             "Read (avg) (ns)",
             "Cache (avg) read (ns)",
@@ -15,6 +16,7 @@ public class BenchmarkResult {
     );
 
     private final String cachePolicy;
+    private final int cacheSize;
     private final int iterations;
     private final int hitCount;
     private final int hitRatio;
@@ -25,6 +27,7 @@ public class BenchmarkResult {
 
     public BenchmarkResult(
             String cachePolicy,
+            int cacheSize,
             int iterations,
             int hitCount,
             int hitRatio,
@@ -34,6 +37,7 @@ public class BenchmarkResult {
             long avgRepositoryReadTime
     ) {
         this.cachePolicy = cachePolicy;
+        this.cacheSize = cacheSize;
         this.iterations = iterations;
         this.hitCount = hitCount;
         this.hitRatio = hitRatio;
@@ -45,6 +49,10 @@ public class BenchmarkResult {
 
     public String getCachePolicy() {
         return cachePolicy;
+    }
+
+    public int getCacheSize() {
+        return cacheSize;
     }
 
     public int getIterations() {
@@ -78,8 +86,9 @@ public class BenchmarkResult {
     @Override
     public String toString() {
         return String.format(
-                "%16s%16d%16d%16d%16d%24d%24d%24d",
+                "%16s%16d%16d%16d%16d%16d%24d%24d%24d",
                 cachePolicy,
+                cacheSize,
                 iterations,
                 hitCount,
                 hitRatio,

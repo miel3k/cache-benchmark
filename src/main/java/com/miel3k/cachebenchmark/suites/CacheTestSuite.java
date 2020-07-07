@@ -66,12 +66,14 @@ public class CacheTestSuite implements TestSuite {
                 cache.putValue(localBook.getId(), localBook);
             }
         }
+        cache.clean();
     }
 
     private BenchmarkResult createResult(long totalStartTime, long totalEndTime, List<Long> cacheTimes, List<Long> repositoryTimes) {
         int hitCount = iterationsCount - cache.getMissCount();
         return new BenchmarkResult(
                 cachePolicy,
+                cacheSize,
                 iterationsCount,
                 hitCount,
                 hitCount * 100 / iterationsCount,

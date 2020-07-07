@@ -35,9 +35,11 @@ public abstract class Cache<K, V> {
         evictionList.remove(key);
     }
 
-    void clean() {
+    public void clean() {
         cacheMap.clear();
         evictionList.clear();
+        evictionCount = 0;
+        missCount = 0;
     }
 
     public HashMap<K, V> getCacheMap() {
