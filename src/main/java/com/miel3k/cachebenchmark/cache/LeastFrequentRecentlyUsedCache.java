@@ -19,6 +19,8 @@ public class LeastFrequentRecentlyUsedCache<K, V> extends Cache<K, V> {
 
     @Override
     public void evict() {
+        evictionCount++;
+
         K keyMin = occurrencesMap.entrySet().stream().min(Map.Entry.comparingByValue()).get().getKey();
         occurrencesMap.remove(keyMin);
         evictionList.remove(keyMin);
@@ -46,6 +48,7 @@ public class LeastFrequentRecentlyUsedCache<K, V> extends Cache<K, V> {
             privilegedEvictionList.addFirst(key);
             return cacheMap.get(key);
         } else {
+            missCount++;
             return null;
         }
     }

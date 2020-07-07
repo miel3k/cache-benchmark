@@ -8,6 +8,8 @@ public abstract class Cache<K, V> {
     int cacheSize;
     HashMap<K, V> cacheMap;
     LinkedList<K> evictionList;
+    int evictionCount = 0;
+    int missCount = 0;
 
     protected Cache() {
     }
@@ -40,5 +42,13 @@ public abstract class Cache<K, V> {
 
     public HashMap<K, V> getCacheMap() {
         return cacheMap;
+    }
+
+    public int getEvictionCount() {
+        return evictionCount;
+    }
+
+    public int getMissCount() {
+        return missCount;
     }
 }

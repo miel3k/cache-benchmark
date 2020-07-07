@@ -8,13 +8,18 @@ public class FirstInFirstOutCache<V, K> extends Cache<K, V> {
 
     @Override
     public void evict() {
+        evictionCount++;
         K key = evictionList.removeFirst();
         cacheMap.remove(key);
     }
 
     @Override
     public V getValue(K key) {
-        return cacheMap.get(key);
+        V value = cacheMap.get(key);
+        if (value == null) {
+            missCount++;
+        }
+        return value;
     }
 
     @Override

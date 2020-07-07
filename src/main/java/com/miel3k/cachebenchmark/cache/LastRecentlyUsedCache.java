@@ -8,6 +8,7 @@ public class LastRecentlyUsedCache<K, V> extends Cache<K, V> {
 
     @Override
     public void evict() {
+        evictionCount++;
         K key = evictionList.removeLast();
         cacheMap.remove(key);
     }
@@ -19,6 +20,7 @@ public class LastRecentlyUsedCache<K, V> extends Cache<K, V> {
             evictionList.addFirst(key);
             return cacheMap.get(key);
         } else {
+            missCount++;
             return null;
         }
     }
