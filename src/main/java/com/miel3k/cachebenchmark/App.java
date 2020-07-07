@@ -67,15 +67,15 @@ public class App implements Runnable {
     }
 
     private int parseCacheSize() {
-        if (cacheSize >= 0) {
+        if (cacheSize > 1 && cacheSize <= 10000) {
             return cacheSize;
         } else {
-            return 1;
+            return 2;
         }
     }
 
     private int parseIterations() {
-        if (iterations >= 0) {
+        if (iterations > 0) {
             return iterations;
         } else {
             return 1;

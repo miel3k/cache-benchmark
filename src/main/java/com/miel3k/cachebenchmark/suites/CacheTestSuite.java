@@ -17,17 +17,27 @@ public class CacheTestSuite implements TestSuite {
     private final Cache<Integer, Book> cache;
     private final int cacheSize;
     private final int iterationsCount;
+    private final boolean isWarmUpEnabled;
 
-    public CacheTestSuite(BookDataSource repository, String cachePolicy, Cache<Integer, Book> cache, int cacheSize, int numberOfIterations) {
+    public CacheTestSuite(
+            BookDataSource repository,
+            String cachePolicy,
+            Cache<Integer, Book> cache,
+            int cacheSize,
+            int numberOfIterations,
+            boolean isWarmUpEnabled
+    ) {
         this.repository = repository;
         this.cachePolicy = cachePolicy;
         this.cache = cache;
         this.cacheSize = cacheSize;
         this.iterationsCount = numberOfIterations;
+        this.isWarmUpEnabled = isWarmUpEnabled;
     }
 
     @Override
     public BenchmarkResult execute() {
+        if (isWarmUpEnabled) executeWarmUp();
         List<Long> cacheTimes = new ArrayList<>();
         List<Long> repositoryTimes = new ArrayList<>();
         long totalStartTime = System.nanoTime();
@@ -46,6 +56,16 @@ public class CacheTestSuite implements TestSuite {
         }
         long totalEndTime = System.nanoTime();
         return createResult(totalStartTime, totalEndTime, cacheTimes, repositoryTimes);
+    }
+
+    private void executeWarmUp() {
+        for (int i = 0; i < iterationsCount; i++) {
+            Book book = cache.getValue(random.nextInt(cacheSize));
+            if (book == null) {
+                Book localBook = repository.getBook(i);
+                cache.putValue(localBook.getId(), localBook);
+            }
+        }
     }
 
     private BenchmarkResult createResult(long totalStartTime, long totalEndTime, List<Long> cacheTimes, List<Long> repositoryTimes) {

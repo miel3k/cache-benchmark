@@ -32,7 +32,8 @@ public class BenchmarkController {
             TestSuite testSuite = TestSuiteFactory.getTestSuite(
                     cacheEvictionPolicy,
                     configuration.getCacheSize(),
-                    configuration.getIterationsCount()
+                    configuration.getIterationsCount(),
+                    configuration.isWarmUpEnabled()
             );
             testSuites.add(testSuite);
         }
